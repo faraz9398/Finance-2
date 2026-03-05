@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens ───────────────────────────────────────────────────────── */
+:root {
+  --bg:       #0f0f1a;
+  --bg-card:  #1a1a2e;
+  --border:   #2d2d4e;
+  --text:     #e2e8f0;
+  --muted:    #94a3b8;
+  --primary:  #6366f1;
+  --primary-h:#818cf8;
+  --success:  #10b981;
+  --warning:  #f59e0b;
+  --danger:   #ef4444;
+  --grad:     linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-card); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Glassmorphism card ───────────────────────────────────────────────────── */
+.glass {
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+/* ── Gradient text ───────────────────────────────────────────────────────── */
+.gradient-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Progress bar ────────────────────────────────────────────────────────── */
+.progress-bar {
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--border);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.6s ease;
+}
+
+/* ── Button styles ───────────────────────────────────────────────────────── */
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200;
+  background: var(--grad);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 30px rgba(99,102,241,0.5);
+}
+
+.btn-ghost {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 border;
+  border-color: var(--border);
+  color: var(--muted);
+}
+.btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ── Nav link ────────────────────────────────────────────────────────────── */
+.nav-link {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200;
+  color: var(--muted);
+}
+.nav-link:hover { color: #fff; background: rgba(99,102,241,0.12); }
+.nav-link.active { color: #fff; background: rgba(99,102,241,0.22); }
+
+/* ── Animated pulse glow ─────────────────────────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(99,102,241,0); }
+}
+.pulse-glow { animation: pulse-glow 2s infinite; }
+
+/* ── Fade-in ─────────────────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: fadeInUp 0.4s ease both; }

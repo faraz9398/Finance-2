@@ -1,0 +1,1286 @@
+# AI Smart Expense Manager & Money Coach
+## Complete Project Documentation
+
+---
+
+## Table of Contents
+1. Project Overview
+2. Problems We Solve
+3. Features (Complete List)
+4. System Architecture
+5. Technology Stack
+6. Database Design
+7. API Endpoints
+8. Frontend Screens
+9. Implementation Steps
+10. Sample Code
+11. Deployment Guide
+12. Testing Plan
+13. Success Metrics
+14. Future Improvements
+
+---
+
+## 1. Project Overview
+
+**Project Name**: AI Smart Expense Manager & Money Coach  
+**Version**: 1.0  
+**Team**: Computer Science Students  
+**Duration**: 3-4 weeks  
+**Status**: Ready to Build
+
+### 1.1 What This App Does
+
+A simple web app that:
+- Imports your bank transactions automatically.
+- Categorizes expenses using AI.
+- Tracks your budgets and sends alerts.
+- Finds hidden subscriptions.
+- Gives personalized saving tips using AI.
+
+### 1.2 Who Uses This App
+
+- Students and freshers with first salary.
+- Young professionals (₹15k-60k/month).
+- Anyone who wants to save money but doesn't know where to start.
+
+### 1.3 Key Problem Being Solved
+
+Most people have ₹20,000-50,000 per month but don't know where it goes. They want simple, clear guidance on how to save more—not just charts and numbers.
+
+---
+
+## 2. Problems We Solve
+
+### Problem 1: No Idea Where Money Goes
+
+**What happens now:**
+- Person spends via UPI/Swiggy/Ola all month.
+- At month-end: "Where did my ₹20,000 go?"
+- No visibility into spending by category.
+
+**How we solve it:**
+- User uploads/pastes transactions.
+- AI auto-categorizes each one (Food, Transport, etc.).
+- Dashboard shows clear breakdown: Food 40%, Transport 25%, etc.
+
+**Real impact:** Users discover they spend 2-3x more on food/rides than they thought.
+
+---
+
+### Problem 2: Overspending Without Notice
+
+**What happens now:**
+- User sets budget: "Food ₹5,000 this month".
+- Spends ₹8,000 without realizing.
+- No alerts until credit card bill arrives.
+
+**How we solve it:**
+- Real-time budget tracking per category.
+- Instant alerts: "Food: 80% of budget used" or "Over budget by ₹1,200".
+- User can adjust spending immediately.
+
+**Real impact:** Users cut overspending by 20-30%.
+
+---
+
+### Problem 3: Forgotten Subscriptions
+
+**What happens now:**
+- User subscribes to Netflix, Spotify, Game Pass, apps.
+- Forgets about them after 1-2 months.
+- Keeps paying ₹1,000-3,000/month for unused services.
+
+**How we solve it:**
+- System detects recurring charges (same amount, monthly pattern).
+- Shows "Subscriptions" section with total cost.
+- Marks "maybe unused" if no activity for 2-3 months.
+- User sees: "You pay ₹2,350/month. Game Pass unused for 3 months?"
+
+**Real impact:** Users save ₹300-1,500/month by canceling unused subscriptions.
+
+---
+
+### Problem 4: No Clear Advice on How to Save
+
+**What happens now:**
+- Apps show charts but don't say what to change.
+- User sees "Food 40%" but doesn't know if that's good/bad.
+- No actionable steps.
+
+**How we solve it:**
+- AI reads user's spending summary.
+- Generates 2-3 practical tips in plain language:
+  - "Cut Swigyo/Zomato by 2/week → save ₹1,200/month."
+  - "Cancel Game Pass → save ₹699/month."
+  - "Move ₹2,000 to savings right after salary."
+
+**Real impact:** Users get specific, doable actions, not just data.
+
+---
+
+## 3. Features (Complete List)
+
+### Feature 1: Transaction Import & CSV Upload
+
+**What it does**
+- User exports transactions from bank (CSV format).
+- User can also manually paste transactions.
+- System reads: Date, Amount, Description.
+
+**Example Input**
+```
+Date,Amount,Description
+2026-01-15,450,Starbucks coffee
+2026-01-15,1500,Uber to office
+2026-01-16,5000,Amazon purchase
+2026-01-17,2500,Restaurant dinner
+2026-01-18,1200,Movie tickets
+```
+
+**Example Output**
+- Transaction uploaded successfully.
+- 5 transactions received.
+- Processing...
+
+---
+
+### Feature 2: AI Expense Categorization
+
+**What it does**
+- Reads each transaction description.
+- Uses AI to guess the category.
+- Assigns one of: Food, Transport, Shopping, Bills, Entertainment, Subscriptions, Other.
+
+**Examples**
+- "Starbucks" → Food
+- "Uber" → Transport
+- "Amazon" → Shopping
+- "Netflix" → Subscriptions
+- "Electricity Bill" → Bills
+
+**Result**
+- Each transaction now has a category.
+- Ready for dashboard display.
+
+---
+
+### Feature 3: Budget Tracking & Real-Time Alerts
+
+**What it does**
+- User sets monthly budget per category.
+- System tracks: spent vs budget for each category.
+- Sends alerts when crossing thresholds.
+
+**Example**
+```
+User sets: Food ₹5,000, Transport ₹2,000, Shopping ₹3,000
+
+System shows:
+Food: ₹4,200 spent / ₹5,000 budget (84%)
+    Alert: "⚠️ Food budget at 84%—careful!"
+
+Transport: ₹1,800 spent / ₹2,000 budget (90%)
+    Alert: "⚠️ Transport budget at 90%!"
+
+Shopping: ₹3,500 spent / ₹3,000 budget (117%)
+    Alert: "❌ Over budget by ₹500!"
+```
+
+---
+
+### Feature 4: Subscription & Recurring Payment Detection
+
+**What it does**
+- Scans all transactions.
+- Finds payments that repeat monthly (same merchant, similar amount).
+- Lists all subscriptions with total monthly cost.
+- Flags "maybe unused" subscriptions.
+
+**Example**
+```
+Detected Subscriptions (₹2,350/month total):
+
+✅ Netflix        ₹499/month  Last used: 2026-01-20
+✅ Spotify        ₹119/month  Last used: 2026-01-18
+⚠️  Game Pass     ₹699/month  Last used: 3 months ago (unused?)
+✅ Google Drive   ₹350/month  Last used: 2026-01-19
+✅ Gym membership ₹599/month  Last used: 6 months ago (unused?)
+```
+
+**Action**
+- User can mark for deletion.
+- Estimated savings visible.
+
+---
+
+### Feature 5: Spending Insights (Month-over-Month Analysis)
+
+**What it does**
+- Compares this month vs last month spending.
+- Shows which categories increased or decreased.
+- Highlights top 3 "danger zones" (categories with biggest increases).
+
+**Example**
+```
+This Month vs Last Month
+
+Food:      ₹4,200 → ₹5,800 (+42%)  ⚠️ Biggest increase
+Transport: ₹1,800 → ₹2,400 (+33%)  ⚠️ Getting expensive
+Shopping:  ₹2,200 → ₹3,200 (+45%)  ⚠️ Second biggest
+
+Total:     ₹15,200 → ₹18,500 (+22%)
+
+Message: "Your spending is up 22% this month. Food and Shopping increased the most."
+```
+
+---
+
+### Feature 6: Simple Forecast & Warnings
+
+**What it does**
+- Looks at last 3 months of spending per category.
+- Calculates average monthly spend.
+- Predicts next month's expenses.
+
+**Example**
+```
+Next Month Forecast (Based on 3-month average)
+
+Food:       ~₹5,000 (average ₹4,800)
+Transport:  ~₹2,000 (average ₹1,900)
+Shopping:   ~₹3,000 (average ₹2,800)
+Bills:      ~₹8,000 (fixed)
+Other:      ~₹1,500
+
+Total predicted: ₹19,000-₹19,500
+
+Message: "Next month, expect around ₹19,000-₹19,500 in spending based on your average."
+```
+
+---
+
+### Feature 7: AI Money Coach (Personalized Tips)
+
+**What it does**
+- System gathers: income, total spending, top categories, subscriptions.
+- Sends this as a prompt to OpenAI.
+- AI returns 2-3 short, actionable suggestions.
+
+**Example**
+```
+Your spending summary:
+- Monthly income: ₹30,000
+- Total spending: ₹18,500
+- Food: ₹5,800
+- Shopping: ₹3,200
+- Subscriptions: ₹2,350
+
+AI Coach Tips:
+1. "You're spending 62% of income. Good news: Food is 31% of spending. 
+    Cut 2 Swiggy/Zomato orders/week → save ₹1,200/month."
+
+2. "You're paying ₹2,350 on subscriptions. 
+    Cancel Game Pass (unused 3 months) → save ₹699/month."
+
+3. "Move ₹2,000 to savings right after salary 
+    (when you have most cash)—you'll still have ₹9,500 for regular expenses."
+```
+
+---
+
+## 4. System Architecture
+
+### High-Level Diagram
+
+```
+┌─────────────────┐          ┌─────────────────┐          ┌─────────────────┐
+│   User Uploads  │          │ React Frontend  │          │  Backend API    │
+│   CSV or Paste  │   ←→     │   (Dashboard)   │   ←→     │  (Node.js)      │
+│   Transactions  │          │                 │          │                 │
+└─────────────────┘          └─────────────────┘          └─────────────────┘
+                                                                    ↓
+                             ┌──────────────────────────────────────┼──────┐
+                             ↓                                       ↓      ↓
+                       ┌────────────┐  ┌────────────┐  ┌──────────────────┐
+                       │  MongoDB   │  │ OpenAI API │  │  Budget Logic &  │
+                       │ Database   │  │ (for AI)   │  │  Calculations    │
+                       └────────────┘  └────────────┘  └──────────────────┘
+```
+
+### Data Flow (Step-by-Step)
+
+```
+1. User uploads transactions (CSV)
+                    ↓
+2. Backend parses: Date, Amount, Description
+                    ↓
+3. Send each description to OpenAI
+                    ↓
+4. OpenAI returns category (Food, Transport, etc.)
+                    ↓
+5. Store in MongoDB with category
+                    ↓
+6. Calculate totals per category
+                    ↓
+7. Check against budgets → generate alerts
+                    ↓
+8. Detect recurring payments → identify subscriptions
+                    ↓
+9. Compare this month vs last month → generate insights
+                    ↓
+10. Build spending summary
+                    ↓
+11. Send summary to OpenAI for coaching tips
+                    ↓
+12. Return everything to frontend
+                    ↓
+13. Display dashboard, budgets, alerts, subscriptions, tips
+```
+
+---
+
+## 5. Technology Stack
+
+| Component | Technology | Why |
+|-----------|-----------|-----|
+| **Frontend** | React + Tailwind CSS | Fast, easy to build, responsive design |
+| **Charts** | Chart.js / Recharts | Beautiful spending pie charts & bar graphs |
+| **Backend** | Node.js + Express | Fast, lightweight, handles requests well |
+| **Database** | MongoDB | Flexible, easy to store user data |
+| **CSV Parsing** | PapaParse | Simple CSV to JSON conversion |
+| **AI** | OpenAI API (GPT-3.5) | Categorization + money coach tips |
+| **HTTP Client** | Axios | Make API calls (front to back, back to OpenAI) |
+| **Deployment - Frontend** | Vercel | Free, fast, supports React |
+| **Deployment - Backend** | Render | Free tier, runs Node.js |
+| **Deployment - Database** | MongoDB Atlas | Free 512MB tier |
+
+---
+
+## 6. Database Design
+
+### Collection 1: Users
+
+**Purpose**: Store user accounts.
+
+```json
+{
+  "_id": "user_123",
+  "email": "rohan@example.com",
+  "name": "Rohan",
+  "created_at": "2026-01-29",
+  "salary": 30000,
+  "currency": "INR"
+}
+```
+
+**Fields**
+- `_id`: Unique user ID
+- `email`: User's email (login)
+- `name`: User's name
+- `created_at`: When account was created
+- `salary`: User's monthly income (optional, for AI tips)
+- `currency`: Currency (INR by default)
+
+---
+
+### Collection 2: Transactions
+
+**Purpose**: Store all user transactions (with categories).
+
+```json
+{
+  "_id": "txn_001",
+  "user_id": "user_123",
+  "date": "2026-01-15",
+  "amount": 450,
+  "description": "Starbucks",
+  "category": "Food",
+  "merchant": "Starbucks Coffee",
+  "is_recurring": false,
+  "month": "2026-01",
+  "created_at": "2026-01-29T10:30:00Z"
+}
+```
+
+**Fields**
+- `_id`: Unique transaction ID
+- `user_id`: Which user this belongs to
+- `date`: Date of transaction
+- `amount`: Amount in ₹
+- `description`: Raw description from bank
+- `category`: AI-categorized (Food, Transport, etc.)
+- `merchant`: Merchant name (extracted from description)
+- `is_recurring`: true if it's a subscription
+- `month`: Year-Month for easy filtering
+- `created_at`: When we recorded it
+
+---
+
+### Collection 3: Budgets
+
+**Purpose**: Store user's budget per category per month.
+
+```json
+{
+  "_id": "budget_001",
+  "user_id": "user_123",
+  "month": "2026-01",
+  "budgets": {
+    "Food": 5000,
+    "Transport": 2000,
+    "Shopping": 3000,
+    "Bills": 8000,
+    "Entertainment": 2000,
+    "Subscriptions": 2500
+  },
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-01-29T10:30:00Z"
+}
+```
+
+**Fields**
+- `_id`: Unique budget ID
+- `user_id`: Which user
+- `month`: Which month (2026-01, 2026-02, etc.)
+- `budgets`: Object with category names as keys, amounts as values
+- `created_at`: When first set
+- `updated_at`: Last modification
+
+---
+
+### Collection 4: Subscriptions
+
+**Purpose**: Store detected subscriptions.
+
+```json
+{
+  "_id": "sub_001",
+  "user_id": "user_123",
+  "merchant": "Netflix",
+  "category": "Subscriptions",
+  "amount": 499,
+  "frequency": "monthly",
+  "last_transaction_date": "2026-01-20",
+  "detected_at": "2026-01-25",
+  "is_active": true,
+  "days_since_last_use": 9,
+  "status": "active"  // "active" or "unused" or "cancelled"
+}
+```
+
+**Fields**
+- `_id`: Unique subscription ID
+- `user_id`: Which user
+- `merchant`: Service name (Netflix, Spotify, etc.)
+- `amount`: Monthly cost
+- `frequency`: Usually "monthly"
+- `last_transaction_date`: When we last saw this charged
+- `detected_at`: When we detected it as recurring
+- `is_active`: Is user still paying?
+- `days_since_last_use`: How many days since activity
+- `status`: "active", "unused", or "cancelled"
+
+---
+
+### Collection 5: Insights
+
+**Purpose**: Store calculated insights (optional, for performance).
+
+```json
+{
+  "_id": "insight_001",
+  "user_id": "user_123",
+  "month": "2026-01",
+  "total_spent": 18500,
+  "total_budget": 22500,
+  "categories_spent": {
+    "Food": 5800,
+    "Transport": 2400,
+    "Shopping": 3200,
+    "Bills": 8000,
+    "Entertainment": 1500
+  },
+  "prev_month_total": 15200,
+  "month_over_month_change_percent": 22,
+  "top_3_increases": [
+    { "category": "Food", "amount": 1000, "percent": 21 },
+    { "category": "Shopping", "amount": 900, "percent": 39 },
+    { "category": "Transport", "amount": 500, "percent": 26 }
+  ],
+  "forecast_next_month": 19200,
+  "alerts": [
+    "Shopping budget exceeded by ₹200",
+    "Transport budget at 80%"
+  ],
+  "created_at": "2026-01-29T10:30:00Z"
+}
+```
+
+---
+
+## 7. API Endpoints
+
+### 1. Upload Transactions
+
+**Endpoint**
+```
+POST /api/transactions/upload
+```
+
+**Request Body**
+```json
+{
+  "transactions": [
+    { "date": "2026-01-15", "amount": 450, "description": "Starbucks" },
+    { "date": "2026-01-15", "amount": 1500, "description": "Uber" },
+    { "date": "2026-01-16", "amount": 5000, "description": "Amazon" }
+  ]
+}
+```
+
+**Response (Success)**
+```json
+{
+  "success": true,
+  "count": 3,
+  "month": "2026-01",
+  "categorized": [
+    { "date": "2026-01-15", "amount": 450, "description": "Starbucks", "category": "Food" },
+    { "date": "2026-01-15", "amount": 1500, "description": "Uber", "category": "Transport" },
+    { "date": "2026-01-16", "amount": 5000, "description": "Amazon", "category": "Shopping" }
+  ]
+}
+```
+
+---
+
+### 2. Get Dashboard Summary
+
+**Endpoint**
+```
+GET /api/dashboard?month=2026-01
+```
+
+**Response**
+```json
+{
+  "total_spent": 18500,
+  "total_budget": 22500,
+  "remaining": 4000,
+  "percentage_spent": 82,
+  "categories": [
+    {
+      "name": "Food",
+      "spent": 5800,
+      "budget": 5000,
+      "percentage": 116,
+      "alert": "Over budget by ₹800"
+    },
+    {
+      "name": "Transport",
+      "spent": 2400,
+      "budget": 2000,
+      "percentage": 120,
+      "alert": "Over budget by ₹400"
+    },
+    {
+      "name": "Shopping",
+      "spent": 3200,
+      "budget": 3000,
+      "percentage": 107,
+      "alert": "Over budget by ₹200"
+    },
+    {
+      "name": "Bills",
+      "spent": 8000,
+      "budget": 8000,
+      "percentage": 100,
+      "alert": null
+    }
+  ],
+  "month": "2026-01"
+}
+```
+
+---
+
+### 3. Get Subscriptions
+
+**Endpoint**
+```
+GET /api/subscriptions
+```
+
+**Response**
+```json
+{
+  "total_monthly": 2350,
+  "count": 5,
+  "subscriptions": [
+    {
+      "merchant": "Netflix",
+      "amount": 499,
+      "frequency": "monthly",
+      "status": "active",
+      "days_unused": 0
+    },
+    {
+      "merchant": "Spotify",
+      "amount": 119,
+      "frequency": "monthly",
+      "status": "active",
+      "days_unused": 0
+    },
+    {
+      "merchant": "Game Pass",
+      "amount": 699,
+      "frequency": "monthly",
+      "status": "unused",
+      "days_unused": 90,
+      "warning": "Not used for 3 months—consider cancelling"
+    }
+  ]
+}
+```
+
+---
+
+### 4. Get Insights
+
+**Endpoint**
+```
+GET /api/insights?month=2026-01
+```
+
+**Response**
+```json
+{
+  "this_month": 18500,
+  "last_month": 15200,
+  "change_percent": 22,
+  "change_amount": 3300,
+  "message": "Spending up 22% this month",
+  "top_increases": [
+    {
+      "category": "Food",
+      "this_month": 5800,
+      "last_month": 4800,
+      "increase": 1000,
+      "increase_percent": 21
+    },
+    {
+      "category": "Shopping",
+      "this_month": 3200,
+      "last_month": 2300,
+      "increase": 900,
+      "increase_percent": 39
+    }
+  ]
+}
+```
+
+---
+
+### 5. Get Forecast
+
+**Endpoint**
+```
+GET /api/forecast
+```
+
+**Response**
+```json
+{
+  "month": "2026-02",
+  "predicted_total": 19200,
+  "confidence": "medium",
+  "by_category": {
+    "Food": 5200,
+    "Transport": 1950,
+    "Shopping": 3100,
+    "Bills": 8000,
+    "Entertainment": 1500
+  },
+  "message": "Based on last 3 months, next month ~₹19,200. Bills are fixed, Food and Shopping vary."
+}
+```
+
+---
+
+### 6. Get AI Money Coach Tips
+
+**Endpoint**
+```
+GET /api/coach
+```
+
+**Response**
+```json
+{
+  "tips": [
+    {
+      "title": "Cut Swiggy/Zomato orders",
+      "action": "Reduce from 6/month to 4/month",
+      "savings": "₹1,200/month",
+      "category": "Food"
+    },
+    {
+      "title": "Cancel unused subscription",
+      "action": "Game Pass not used in 3 months",
+      "savings": "₹699/month",
+      "category": "Subscriptions"
+    },
+    {
+      "title": "Auto-save strategy",
+      "action": "Move ₹2,000 to savings right after salary",
+      "savings": "Build emergency fund",
+      "category": "Savings"
+    }
+  ],
+  "total_potential_savings": 1899,
+  "message": "If you follow these 3 tips, you could save ~₹1,900/month!"
+}
+```
+
+---
+
+### 7. Set Budget
+
+**Endpoint**
+```
+PUT /api/budgets
+```
+
+**Request Body**
+```json
+{
+  "month": "2026-02",
+  "budgets": {
+    "Food": 5500,
+    "Transport": 2000,
+    "Shopping": 2500,
+    "Bills": 8000,
+    "Entertainment": 2000,
+    "Subscriptions": 2000
+  }
+}
+```
+
+**Response**
+```json
+{
+  "success": true,
+  "month": "2026-02",
+  "budgets": {
+    "Food": 5500,
+    "Transport": 2000,
+    "Shopping": 2500,
+    "Bills": 8000,
+    "Entertainment": 2000,
+    "Subscriptions": 2000
+  },
+  "total_budget": 21000
+}
+```
+
+---
+
+## 8. Frontend Screens
+
+### Screen 1: Login & Onboarding
+
+```
+┌──────────────────────────────────────┐
+│  💰 Money Coach                       │
+├──────────────────────────────────────┤
+│                                      │
+│  Email: [________________]           │
+│  Password: [________________]        │
+│                                      │
+│  [ Create Account ] [ Sign In ]      │
+│                                      │
+│  New user?                           │
+│  "Your money, your control"          │
+└──────────────────────────────────────┘
+```
+
+---
+
+### Screen 2: Dashboard
+
+```
+┌──────────────────────────────────────┐
+│  January 2026 - Dashboard            │
+├──────────────────────────────────────┤
+│                                      │
+│  Total Spent: ₹18,500 / ₹22,500     │
+│  [████████░░] 82% of budget         │
+│                                      │
+│  ┌──────────────┬─────────┐          │
+│  │ Food   │████▌₹5,800│  │          │
+│  │        │5,000 budget   │          │
+│  ├────────┼─────────────┤│          │
+│  │ Transport│████▌₹2,400│          │
+│  │        │2,000 budget │          │
+│  ├────────┼─────────────┤│          │
+│  │ Shopping│████▌₹3,200│           │
+│  │        │3,000 budget │          │
+│  └────────┴─────────────┘           │
+│                                      │
+│  ⚠️ Alerts:                          │
+│  • Food: Over budget by ₹800        │
+│  • Transport: Over budget by ₹400   │
+│                                      │
+│  [ View Subscriptions ] [ Get Tips ] │
+└──────────────────────────────────────┘
+```
+
+---
+
+### Screen 3: Subscriptions
+
+```
+┌──────────────────────────────────────┐
+│  Subscriptions (₹2,350/month)        │
+├──────────────────────────────────────┤
+│                                      │
+│  ✅ Netflix      ₹499/month          │
+│     Last used: Jan 20, 2026         │
+│     [  Keep  ] [ Cancel ]           │
+│                                      │
+│  ✅ Spotify      ₹119/month          │
+│     Last used: Jan 18, 2026         │
+│     [  Keep  ] [ Cancel ]           │
+│                                      │
+│  ⚠️  Game Pass   ₹699/month          │
+│     Last used: Oct 2025 (unused!)   │
+│     [  Keep  ] [ Cancel ] ← Unused  │
+│                                      │
+│  Total Savings if you cancel unused: │
+│  ₹699/month                          │
+│                                      │
+└──────────────────────────────────────┘
+```
+
+---
+
+### Screen 4: Insights
+
+```
+┌──────────────────────────────────────┐
+│  Spending Insights                   │
+├──────────────────────────────────────┤
+│                                      │
+│  January vs December                │
+│  Total: ₹15,200 → ₹18,500 (+22%)   │
+│                                      │
+│  Top Increases:                      │
+│  1. Food: ₹4,800 → ₹5,800 (+21%)   │
+│     Reason: 6 Swiggy/Zomato orders │
+│                                      │
+│  2. Shopping: ₹2,300 → ₹3,200 (+39%)
+│     Reason: Online shopping         │
+│                                      │
+│  3. Transport: ₹1,800 → ₹2,400 (+33%)
+│     Reason: More Uber rides        │
+│                                      │
+│  💡 Tip: Cut Swiggy by 2/week to   │
+│  save ₹1,200/month                  │
+│                                      │
+└──────────────────────────────────────┘
+```
+
+---
+
+### Screen 5: Upload Transactions
+
+```
+┌──────────────────────────────────────┐
+│  📤 Import Transactions              │
+├──────────────────────────────────────┤
+│                                      │
+│  Paste your transactions:            │
+│  ┌──────────────────────────────┐   │
+│  │ Date,Amount,Description      │   │
+│  │ 2026-01-15,450,Starbucks     │   │
+│  │ 2026-01-15,1500,Uber         │   │
+│  │ 2026-01-16,5000,Amazon       │   │
+│  └──────────────────────────────┘   │
+│                                      │
+│  [ Load Example ] [ Upload ]        │
+│                                      │
+│  Already in Excel?                  │
+│  "Download template" or just        │
+│  "Copy-paste from bank app"         │
+│                                      │
+└──────────────────────────────────────┘
+```
+
+---
+
+### Screen 6: Money Coach Tips
+
+```
+┌──────────────────────────────────────┐
+│  💡 AI Money Coach                   │
+├──────────────────────────────────────┤
+│                                      │
+│  Based on your spending, here's     │
+│  how to save more:                  │
+│                                      │
+│  1️⃣  Cut Swiggy/Zomato              │
+│  Reduce from 6/month to 4/month     │
+│  💰 Save: ₹1,200/month               │
+│                                      │
+│  2️⃣  Cancel Game Pass                │
+│  You haven't used it in 3 months    │
+│  💰 Save: ₹699/month                 │
+│                                      │
+│  3️⃣  Auto-save                       │
+│  Move ₹2,000 to savings after      │
+│  salary—you'll still have ₹9,500   │
+│  for expenses                       │
+│  💰 Build emergency fund            │
+│                                      │
+│  Total possible savings: ₹1,899/mo │
+│                                      │
+└──────────────────────────────────────┘
+```
+
+---
+
+## 9. Implementation Steps (Week by Week)
+
+### Week 1: Backend Setup & Core Logic
+
+**Day 1-2: Project Setup**
+- Create Node.js project
+- Set up Express server
+- Connect to MongoDB
+- Create .env file
+
+**Day 3-4: Transaction Upload & Parsing**
+- Create `POST /api/transactions/upload` endpoint
+- Parse CSV input
+- Store raw transactions in MongoDB
+- Test with sample data
+
+**Day 5-7: AI Categorization**
+- Get OpenAI API key (free trial or ₹100)
+- Create categorization function
+- Call OpenAI for each transaction
+- Store category in database
+- Test accuracy (90%+ required)
+
+---
+
+### Week 2: Budget & Dashboard Backend
+
+**Day 8-10: Budget API**
+- Create `GET /api/budgets` endpoint
+- Create `PUT /api/budgets` endpoint
+- Calculate totals per category
+- Calculate percentage spent vs budget
+
+**Day 11-14: Dashboard Data Calculation**
+- Create `GET /api/dashboard` endpoint
+- Calculate alerts (over/near budget)
+- Calculate month-over-month comparison
+- Test all calculations
+
+---
+
+### Week 3: Subscriptions & Insights
+
+**Day 15-18: Subscription Detection**
+- Write logic to detect recurring payments
+- Create `GET /api/subscriptions` endpoint
+- Mark "unused" subscriptions
+- Calculate total subscription cost
+
+**Day 19-21: Insights & Forecast**
+- Create `GET /api/insights` endpoint
+- Compare month vs month
+- Calculate simple forecast (3-month average)
+- Create `GET /api/forecast` endpoint
+
+---
+
+### Week 4: Frontend & AI Coach
+
+**Day 22-24: React Dashboard Setup**
+- Create React app with Tailwind CSS
+- Build navigation
+- Build transaction upload page
+- Build dashboard page with charts
+
+**Day 25-26: AI Coach Integration**
+- Create coaching tips function
+- Send spending summary to OpenAI
+- Display tips on frontend
+
+**Day 27-28: Testing & Polish**
+- Test with 100+ transactions
+- Test with friends (5-10 users)
+- Fix bugs
+- Deploy to Vercel + Render
+
+---
+
+## 10. Sample Code
+
+### Backend: Express Server Setup
+
+**File: `server.js`**
+
+```javascript
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI);
+
+// Routes
+app.post('/api/transactions/upload', async (req, res) => {
+  const { transactions } = req.body;
+  
+  // TODO: Categorize with OpenAI
+  // TODO: Store in MongoDB
+  
+  res.json({ success: true, count: transactions.length });
+});
+
+app.get('/api/dashboard', async (req, res) => {
+  const { month } = req.query;
+  
+  // TODO: Fetch transactions
+  // TODO: Calculate totals per category
+  // TODO: Calculate alerts
+  
+  res.json({ total_spent: 0, categories: [] });
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+---
+
+### Frontend: React Dashboard
+
+**File: `src/Dashboard.jsx`**
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+
+function Dashboard() {
+  const [summary, setSummary] = useState(null);
+
+  useEffect(() => {
+    // Fetch dashboard data
+    fetch('/api/dashboard')
+      .then(res => res.json())
+      .then(data => setSummary(data));
+  }, []);
+
+  if (!summary) return <div>Loading...</div>;
+
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-4">💰 Dashboard</h1>
+
+      <div className="mb-6">
+        <h2 className="text-xl font-semibold">
+          Total: ₹{summary.total_spent} / ₹{summary.total_budget}
+        </h2>
+        <p className="text-gray-600">{summary.percentage_spent}% spent</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {summary.categories.map(cat => (
+          <div key={cat.name} className="p-4 border rounded">
+            <h3 className="font-bold">{cat.name}</h3>
+            <p>₹{cat.spent} / ₹{cat.budget}</p>
+            <p>{cat.percentage}%</p>
+            {cat.alert && <p className="text-red-600">⚠️ {cat.alert}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Dashboard;
+```
+
+---
+
+## 11. Deployment Guide
+
+### Deploy Backend to Render (Free)
+
+1. **Sign up**: https://render.com
+2. **Create new Web Service**
+3. **Connect GitHub repo** (select backend folder)
+4. **Add Environment Variables**:
+   - `MONGODB_URI=your_mongodb_connection_string`
+   - `OPENAI_API_KEY=your_openai_key`
+5. **Deploy** → Copy live URL
+
+---
+
+### Deploy Frontend to Vercel (Free)
+
+1. **Sign up**: https://vercel.com
+2. **Import GitHub repo** (select frontend folder)
+3. **Add Environment Variable**:
+   - `REACT_APP_API_URL=your_render_url`
+4. **Deploy** → Get live URL
+
+---
+
+### Database: MongoDB Atlas (Free)
+
+1. **Sign up**: https://mongodb.com/atlas
+2. **Create free cluster** (512MB)
+3. **Get connection string**
+4. **Add to backend `.env`**
+
+---
+
+## 12. Testing Plan
+
+### Manual Testing (Week 4)
+
+1. **Upload test transactions**
+   - Use your own 20-30 bank transactions
+   - Check if categorization is accurate
+
+2. **Set budgets**
+   - Set Food ₹5,000, Transport ₹2,000
+   - Check if alerts work
+
+3. **Test with friends** (5-10 users)
+   - Collect feedback
+   - Fix bugs
+
+---
+
+### Automated Tests (Optional)
+
+```javascript
+// test.js
+const assert = require('assert');
+
+// Test 1: Categorization
+assert.equal(categorize('Starbucks'), 'Food');
+assert.equal(categorize('Uber'), 'Transport');
+
+// Test 2: Budget calculation
+const result = calculateBudget([
+  { amount: 450, category: 'Food' },
+  { amount: 500, category: 'Food' }
+], { Food: 1000 });
+
+assert.equal(result.Food.spent, 950);
+assert.equal(result.Food.percentage, 95);
+
+console.log('✅ All tests passed!');
+```
+
+---
+
+## 13. Success Metrics
+
+Your project succeeds if:
+
+- ✅ **Upload works**: Can handle 100+ transactions
+- ✅ **Categorization accurate**: 90%+ correct categories
+- ✅ **Dashboard functional**: Shows all data correctly
+- ✅ **Budgets work**: Alerts trigger when over/near limit
+- ✅ **Subscriptions detected**: Finds recurring payments
+- ✅ **AI tips useful**: Friends say tips are actionable
+- ✅ **Live deployment**: App accessible on public URL
+- ✅ **Mobile responsive**: Works on phone too
+- ✅ **10+ beta users**: Get real feedback
+
+---
+
+## 14. Future Improvements (After MVP)
+
+**Phase 2 (Week 5-6)**
+- User authentication (login/signup)
+- Profile settings
+- Multiple users on one app
+- Change budget mid-month
+
+**Phase 3 (Week 7-8)**
+- Bank API integration (auto-fetch transactions)
+- Goal tracking ("Save ₹10,000 for laptop")
+- Monthly email summaries
+- Mobile app (React Native)
+
+**Phase 4 (Month 2-3)**
+- Investment suggestions (mutual funds)
+- Credit score tracking
+- Loan eligibility calculator
+- Bill reminder & payment automation
+
+---
+
+## Quick Reference
+
+### Key URLs
+- Frontend: https://your-app.vercel.app
+- Backend: https://your-app.onrender.com
+- Database: MongoDB Atlas
+
+### Key Files
+- `backend/server.js` → Main backend server
+- `frontend/src/App.jsx` → React app
+- `backend/.env` → Configuration
+
+### Commands
+```bash
+# Backend
+npm install
+npm start
+
+# Frontend
+npm install
+npm start
+
+# Deploy backend
+git push origin main (on Render)
+
+# Deploy frontend
+git push origin main (on Vercel)
+```
+
+---
+
+## Contact & Support
+
+- Questions? Check the code comments
+- Stuck? Google the error message
+- Want help? Ask in Stack Overflow
+
+---
+
+**Your app is ready to build. Start with backend setup and have fun!** 🚀
+
+Good luck with your project! You've got this! 💪
+
