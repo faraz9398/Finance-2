@@ -10,7 +10,7 @@ const subscriptionRoutes = require('./routes/subscriptions');
 const insightRoutes = require('./routes/insights');
 const forecastRoutes = require('./routes/forecast');
 const coachRoutes = require('./routes/coach');
-
+//trfdutruterut
 const app = express();
 
 // ── Middleware ──────────────────────────────────────────────────────────────
